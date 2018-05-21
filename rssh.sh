@@ -56,10 +56,10 @@ while getopts ":hc::d:" OPTION; do
 done
 shift $((OPTIND -1))
 
-HOST=$1     # assigns hostname for SSH command
+HOST=$1     # assigns ip address for SSH command
 
 if [[ "$HOST" =~ ^([0-1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])\.([0-1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])\.([0-1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])\.([0-1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])$ ]]; then
-    # checks that valid hostname was entered
+    # checks that valid ip address was entered
     while [ $RETRY -le $((COUNT)) ]; do
         echo "ssh: connection attempt ${RETRY}..."
         ssh $HOST
