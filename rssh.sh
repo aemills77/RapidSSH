@@ -5,7 +5,7 @@
 # Modified: 05.20.2018
 # License:  GPLv3
 #
-# Usage: -c [count] -d [delay] SSH hostname
+# Usage: -c [count] -d [delay] SSH hostname [valid IP address]
 
 # options
 
@@ -13,10 +13,10 @@ OPTION=$@
 
 # variables
 
-COUNT=5     # default value: 5 retries
-DELAY=3     # default value: 3 second delay between retries
-RETRY=1     # default value: incrimentor for SSH while..loop
-USAGE="usage: $0 -c [count] -d [delay] hostname"
+declare -i COUNT=5 # default value: 5 retries
+declare -i DELAY=3 # default value: 3 second delay between retries
+declare -i RETRY=1 # default value: incrimentor for SSH while..loop
+declare -r USAGE="usage: $0 -c [count] -d [delay] hostname [IP address]"
 
 # main rssh.sh
 
@@ -58,8 +58,8 @@ shift $((OPTIND -1))
 
 HOST=$1     # assigns hostname for SSH command
 
-if [ ! -z "$HOST" ]; then
-    # checks that hostname was entered
+if [[ "$HOST" =~ ^([0-1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])\.([0-1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])\.([0-1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])\.([0-1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])$ ]]; then
+    # checks that valid hostname was entered
     while [ $RETRY -le $((COUNT)) ]; do
         echo "ssh: connection attempt ${RETRY}..."
         ssh $HOST
